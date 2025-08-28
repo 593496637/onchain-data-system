@@ -1,0 +1,56 @@
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+package-lock.json
+yarn.lock
+.pnpm-debug.log
+
+# Vite / Vue / React
+dist/
+build/
+*.local
+
+# Logs
+logs
+*.log
+*.log.*
+
+# Editor directories and files
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Env files
+.env
+.env.*
+!.env.example
+
+# Cache
+.cache/
+.temp/
+.tmp/
+coverage/
+*.tsbuildinfo
+
+# Mac / Linux system files
+.DS_Store
+Thumbs.db
+
+
+generated/
+jspm_packages/
+
+# Testing
+coverage
+coverage.json
+
+# Typechain
+typechain
+typechain-types

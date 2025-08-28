@@ -1,0 +1,10 @@
+# schema.graphql
+type DataWrittenEvent @entity(immutable: true) {
+  id: Bytes! # Transaction hash + Log index
+  eventId: BigInt! # eventId from contract
+  from: Bytes! # address of the sender
+  message: String! # the stored message
+  timestamp: BigInt! # block timestamp
+  blockNumber: BigInt!
+  transactionHash: Bytes!
+}
