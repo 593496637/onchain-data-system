@@ -24,3 +24,25 @@ dataSources:
         - event: DataWritten(indexed uint256,indexed address,string,uint256)
           handler: handleDataWritten
       file: ./src/data-storage.ts
+  - kind: ethereum
+    name: SwapAndMemo
+    network: sepolia
+    source:
+      # 在这里粘贴你新部署的 SwapAndMemo 合约地址！
+      address: "0x3f8548743CEf889f23D8A56d341c67c0ea799B73"
+      abi: SwapAndMemo
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.9
+      language: wasm/assemblyscript
+      entities:
+        - MemoizedSwapEvent
+      abis:
+        - name: SwapAndMemo
+          file: ./abis/SwapAndMemo.json
+      eventHandlers:
+        # 定义事件处理器：当 SwapAndMemo 合约触发 MemoizedSwap 事件时...
+        - event: MemoizedSwap(indexed address,indexed address,string,uint256,uint256)
+          # ...调用下面的 handleMemoizedSwap 函数
+          handler: handleMemoizedSwap
+      file: ./src/data-storage.ts # 我们将新函数也写在同一个文件里

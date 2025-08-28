@@ -28,8 +28,8 @@ logs
 *.sw?
 
 # Env files
-.env
-.env.*
+# .env
+# .env.*
 !.env.example
 
 # Cache
