@@ -13,7 +13,7 @@ dataSources:
       startBlock: 9075039
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.9
+      apiVersion: 0.0.7
       language: wasm/assemblyscript
       entities:
         - DataWritten
@@ -25,24 +25,24 @@ dataSources:
           handler: handleDataWritten
       file: ./src/data-storage.ts
   - kind: ethereum
-    name: SwapAndMemo
+    name: SwapAndMemoV3
     network: sepolia
     source:
-      # 在这里粘贴你新部署的 SwapAndMemo 合约地址！
-      address: "0x3f8548743CEf889f23D8A56d341c67c0ea799B73"
-      abi: SwapAndMemo
+      # 在这里粘贴你新部署的 SwapAndMemoV3 合约地址！
+      address: "0x1f5423d29193b95Fd09233C2dfB3879C981a14a4"
+      abi: SwapAndMemoV3
+      # 可选：从部署日志中找到该合约的 block number 填入
+      # startBlock: <PASTE_BLOCK_NUMBER_HERE>
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.9
+      apiVersion: 0.0.7
       language: wasm/assemblyscript
       entities:
         - MemoizedSwapEvent
       abis:
-        - name: SwapAndMemo
-          file: ./abis/SwapAndMemo.json
+        - name: SwapAndMemoV3
+          file: ./abis/SwapAndMemoV3.json
       eventHandlers:
-        # 定义事件处理器：当 SwapAndMemo 合约触发 MemoizedSwap 事件时...
         - event: MemoizedSwap(indexed address,indexed address,string,uint256,uint256)
-          # ...调用下面的 handleMemoizedSwap 函数
           handler: handleMemoizedSwap
-      file: ./src/data-storage.ts # 我们将新函数也写在同一个文件里
+      file: ./src/data-storage.ts
