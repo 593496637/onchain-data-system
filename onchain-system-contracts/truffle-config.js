@@ -42,7 +42,7 @@
  */
 
 require('dotenv').config();
-const { MNEMONIC, ALCHEMY_SEPOLIA_URL } = process.env;
+const { MNEMONIC, INFURA_API_KEY } = process.env;
 const HDWalletProvider = require('@truffle/hdwallet-provider');
 
 module.exports = {
@@ -69,8 +69,8 @@ module.exports = {
     //  network_id: "*",       // Any network (default: none)
     // },
     sepolia: {
-      // provider: () => new HDWalletProvider(MNEMONIC, `https://sepolia.infura.io/v3/${INFURA_API_KEY}`),
-      provider: () => new HDWalletProvider(MNEMONIC, ALCHEMY_SEPOLIA_URL),
+      provider: () => new HDWalletProvider(MNEMONIC, `https://sepolia.infura.io/v3/${INFURA_API_KEY}`),
+      // provider: () => new HDWalletProvider(MNEMONIC, ALCHEMY_SEPOLIA_URL),
       network_id: 11155111,       // Sepolia's network ID
       confirmations: 2,          // 部署之间等待的区块确认数
       timeoutBlocks: 200,        // 部署超时前的区块数
