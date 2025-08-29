@@ -1,6 +1,7 @@
 // src/components/WalletConnect.tsx
 // ** V11 - FINAL & COMPLETE with resilient ENS lookup **
 import { useState, useEffect, useMemo, useRef } from "react";
+import { createPortal } from "react-dom";
 import { ethers } from "ethers";
 
 const supportedChains = [
@@ -261,7 +262,7 @@ export const WalletConnect = () => {
         </div>
       )}
 
-      {isAccountModalOpen && userAddress && (
+      {isAccountModalOpen && userAddress && createPortal(
         <div className="modal-overlay">
           <div className="modal-content" ref={accountModalRef}>
             <button
@@ -293,10 +294,11 @@ export const WalletConnect = () => {
               </button>
             </div>
           </div>
-        </div>
+        </div>,
+        document.body
       )}
 
-      {isNetworkModalOpen && (
+      {isNetworkModalOpen && createPortal(
         <div className="modal-overlay">
           <div className="modal-content" ref={networkModalRef}>
             <button
@@ -323,7 +325,8 @@ export const WalletConnect = () => {
               ))}
             </div>
           </div>
-        </div>
+        </div>,
+        document.body
       )}
 
       {errorMessage && <p className="error-message">{errorMessage}</p>}

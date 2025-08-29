@@ -32,7 +32,37 @@ export const TokenForm = () => {
   const [errorMessage, setErrorMessage] = useState("");
 
   const getErrorMessage = (error: unknown): string => {
-    if (error instanceof Error) return error.message;
+    if (error instanceof Error) {
+      // 用户取消交易
+      if (error.message.includes('rejected') || 
+          error.message.includes('denied') || 
+          error.message.includes('ACTION_REJECTED') ||
+          error.message.includes('User denied')) {
+        return "交易已取消";
+      }
+      
+      // 余额不足
+      if (error.message.includes('insufficient funds')) {
+        return "余额不足，请确认账户有足够的ETH支付gas费用";
+      }
+      
+      // 代币余额不足
+      if (error.message.includes('transfer amount exceeds balance')) {
+        return "代币余额不足，请检查您的USDC余额";
+      }
+      
+      // 网络错误
+      if (error.message.includes('network')) {
+        return "网络连接异常，请检查网络状态";
+      }
+      
+      // 合约执行错误
+      if (error.message.includes('execution reverted')) {
+        return "合约执行失败，请检查交易参数";
+      }
+      
+      return error.message;
+    }
     return String(error);
   };
 
@@ -90,7 +120,7 @@ export const TokenForm = () => {
   };
 
   return (
-    <div>
+    <div className="form-container">
       <div className="info-box">
         <p>
           <strong>提示:</strong> 你需要先获取一些 Sepolia 测试网的 USDC

@@ -1,4 +1,3 @@
-// src/App.tsx
 import { useState } from "react";
 import { WalletConnect } from "./components/WalletConnect";
 import { LogForm } from "./components/LogForm";
@@ -8,92 +7,139 @@ import { SwapFormV3 } from "./components/SwapFormV3";
 import { DataList } from "./components/DataList";
 import "./App.css";
 
-// 定义 Tab 的类型，方便管理
-type Tab = "log" | "transfer" | "token" | "swapV3";
+type ActiveModule = "log" | "transfer" | "token" | "swap" | "data";
+
+interface ModuleInfo {
+  id: ActiveModule;
+  title: string;
+  description: string;
+  icon: string;
+  component: React.ComponentType;
+}
+
+const modules: ModuleInfo[] = [
+  {
+    id: "log",
+    title: "事件日志",
+    description: "通过智能合约事件记录数据到区块链",
+    icon: "📝",
+    component: LogForm,
+  },
+  {
+    id: "transfer",
+    title: "转账记录", 
+    description: "通过ETH转账的附加数据字段存储信息",
+    icon: "💸",
+    component: TransferForm,
+  },
+  {
+    id: "token",
+    title: "代币交易",
+    description: "通过ERC20代币转账记录交易数据",
+    icon: "🪙",
+    component: TokenForm,
+  },
+  {
+    id: "swap",
+    title: "去中心化交易",
+    description: "通过Uniswap V3兑换同时记录附言数据",
+    icon: "🔄",
+    component: SwapFormV3,
+  },
+  {
+    id: "data",
+    title: "链上数据",
+    description: "查看和搜索所有已上链的数据记录",
+    icon: "📊",
+    component: DataList,
+  },
+];
 
 function App() {
-  // --- 状态管理 ---
-  // 当前激活的 Tab，默认为 'log'
-  const [activeTab, setActiveTab] = useState<Tab>("swapV3");
+  const [activeModule, setActiveModule] = useState<ActiveModule>("log");
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
+
+  const currentModule = modules.find(m => m.id === activeModule);
+  const ActiveComponent = currentModule?.component || LogForm;
 
   return (
-    <div className="app-container">
-      <header>
-        <h1>数据上链系统</h1>
-        <WalletConnect />
-      </header>
-
-      <main>
-        {/* --- Tab 导航 --- */}
-        <div className="tabs">
-          <button
-            className={activeTab === "log" ? "active" : ""}
-            onClick={() => setActiveTab("log")}
+    <div className="app">
+      {/* Sidebar Navigation */}
+      <aside className={`sidebar ${sidebarCollapsed ? 'collapsed' : ''}`}>
+        <div className="sidebar-header">
+          <div className="logo">
+            <span className="logo-icon">⛓️</span>
+            {!sidebarCollapsed && <span className="logo-text">链上数据系统</span>}
+          </div>
+          <button 
+            className="sidebar-toggle"
+            onClick={() => setSidebarCollapsed(!sidebarCollapsed)}
           >
-            日志方式
-          </button>
-          <button
-            className={activeTab === "transfer" ? "active" : ""}
-            onClick={() => setActiveTab("transfer")}
-          >
-            转账方式
-          </button>
-          <button
-            className={activeTab === "token" ? "active" : ""}
-            onClick={() => setActiveTab("token")}
-          >
-            Token 方式 (选修)
-          </button>
-          <button
-            className={activeTab === "swapV3" ? "active" : ""}
-            onClick={() => setActiveTab("swapV3")}
-          >
-            兑换并附言
+            {sidebarCollapsed ? '→' : '←'}
           </button>
         </div>
 
-        {/* --- 根据 Tab 显示不同内容 --- */}
+        <nav className="sidebar-nav">
+          {modules.map((module) => (
+            <button
+              key={module.id}
+              className={`nav-item ${activeModule === module.id ? 'active' : ''}`}
+              onClick={() => setActiveModule(module.id)}
+              title={sidebarCollapsed ? module.title : ''}
+            >
+              <span className="nav-icon">{module.icon}</span>
+              {!sidebarCollapsed && (
+                <div className="nav-content">
+                  <span className="nav-title">{module.title}</span>
+                  <span className="nav-desc">{module.description}</span>
+                </div>
+              )}
+            </button>
+          ))}
+        </nav>
+      </aside>
+
+      {/* Main Content */}
+      <main className="main">
+        {/* Header */}
+        <header className="header">
+          <div className="header-content">
+            <div className="page-info">
+              <div className="page-title-wrapper">
+                <button 
+                  className="mobile-menu-btn"
+                  onClick={() => setSidebarCollapsed(!sidebarCollapsed)}
+                >
+                  ☰
+                </button>
+                <h1 className="page-title">
+                  <span className="page-icon">{currentModule?.icon}</span>
+                  {currentModule?.title}
+                </h1>
+              </div>
+              <p className="page-description">{currentModule?.description}</p>
+            </div>
+            <div className="header-actions">
+              <WalletConnect />
+            </div>
+          </div>
+        </header>
+
+        {/* Content Area */}
         <div className="content">
-          {activeTab === "log" && (
-            <div className="form-container">
-              <h2>通过日志记录数据</h2>
-              {/* 日志方式的表单将放在这里 */}
-              <LogForm />
-            </div>
-          )}
-
-          {activeTab === "transfer" && (
-            <div className="form-container">
-              <h2>通过转账附加数据</h2>
-              {/* 转账方式的表单将放在这里 */}
-              <TransferForm />
-            </div>
-          )}
-
-          {activeTab === "token" && (
-            <div className="form-container">
-              <h2>通过 Token 交易记录</h2>
-              {/* Token 方式的表单将放在这里 */}
-              <TokenForm />
-            </div>
-          )}
-
-          {activeTab === "swapV3" && (
-            <div className="form-container">
-              <h2>通过兑换记录数据 (Uniswap V3)</h2>
-              {/* 新的表单组件将放在这里 */}
-              <SwapFormV3 />
-            </div>
-          )}
-        </div>
-
-        {/* --- 数据展示区 --- */}
-        <div className="data-list-container">
-          <h2>链上数据记录</h2>
-          {/* 从 The Graph 获取的数据列表将放在这里 */}
-          <DataList />
+          <div className="content-wrapper">
+            <ActiveComponent />
+          </div>
         </div>
       </main>
+
+      {/* Mobile Overlay */}
+      {!sidebarCollapsed && (
+        <div 
+          className="mobile-overlay"
+          onClick={() => setSidebarCollapsed(true)}
+        />
+      )}
     </div>
   );
 }

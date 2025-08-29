@@ -81,33 +81,35 @@ export const DataList = () => {
   }
 
   return (
-    <div className="data-list">
+    <div className="data-container">
       <button onClick={fetchData} className="refresh-button">
         刷新数据
       </button>
       {data.length === 0 ? (
         <p>还没有任何数据记录。</p>
       ) : (
-        <table>
-          <thead>
-            <tr>
-              <th>消息</th>
-              <th>发送者</th>
-              <th>时间</th>
-            </tr>
-          </thead>
-          <tbody>
-            {data.map((event) => (
-              <tr key={event.id}>
-                <td>{event.message}</td>
-                <td>{event.from}</td>
-                <td>
-                  {new Date(parseInt(event.timestamp) * 1000).toLocaleString()}
-                </td>
+        <div className="data-table-wrapper">
+          <table className="data-table">
+            <thead>
+              <tr>
+                <th>消息</th>
+                <th>发送者</th>
+                <th>时间</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {data.map((event) => (
+                <tr key={event.id}>
+                  <td>{event.message}</td>
+                  <td>{event.from}</td>
+                  <td>
+                    {new Date(parseInt(event.timestamp) * 1000).toLocaleString()}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       )}
     </div>
   );

@@ -141,13 +141,49 @@ export const SwapFormV3 = () => {
       setMessage("");
       setQuote("");
     } catch (error: unknown) {
-      setErrorMessage(error instanceof Error ? error.message : "交易失败");
+      const getErrorMessage = (error: unknown): string => {
+        if (error instanceof Error) {
+          // 用户取消交易
+          if (error.message.includes('rejected') || 
+              error.message.includes('denied') || 
+              error.message.includes('ACTION_REJECTED') ||
+              error.message.includes('User denied')) {
+            return "交易已取消";
+          }
+          
+          // 余额不足
+          if (error.message.includes('insufficient funds')) {
+            return "余额不足，请确认账户有足够的ETH支付交易";
+          }
+          
+          // 滑点过大
+          if (error.message.includes('Too little received') || 
+              error.message.includes('INSUFFICIENT_OUTPUT_AMOUNT')) {
+            return "滑点过大，请重新获取报价后再试";
+          }
+          
+          // 流动性不足
+          if (error.message.includes('STF')) {
+            return "流动性不足，请减少交易金额";
+          }
+          
+          // 网络错误
+          if (error.message.includes('network')) {
+            return "网络连接异常，请检查网络状态";
+          }
+          
+          return error.message;
+        }
+        return "交易失败";
+      };
+      
+      setErrorMessage(getErrorMessage(error));
       setTxStatus("error");
     }
   };
 
   return (
-    <div>
+    <div className="form-container">
       <form onSubmit={handleSubmit}>
         <div className="form-group">
           <label htmlFor="eth-amount">支付金额 (ETH):</label>
