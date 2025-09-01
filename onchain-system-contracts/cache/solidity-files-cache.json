@@ -1,0 +1,77 @@
+{
+  "_format": "hh-sol-cache-2",
+  "files": {
+    "/Users/likaikai/learn/onchain-data-system/onchain-system-contracts/contracts/DataStorage.sol": {
+      "lastModificationDate": 1756299081996,
+      "contentHash": "1341bbde5c20863ac3145dd9a22e3153",
+      "sourceName": "contracts/DataStorage.sol",
+      "solcConfig": {
+        "version": "0.8.21",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.20"
+      ],
+      "artifacts": [
+        "DataStorage"
+      ]
+    },
+    "/Users/likaikai/learn/onchain-data-system/onchain-system-contracts/contracts/TransferWithMessage.sol": {
+      "lastModificationDate": 1756736384542,
+      "contentHash": "930097e4b09d17de8666129884a3c7bc",
+      "sourceName": "contracts/TransferWithMessage.sol",
+      "solcConfig": {
+        "version": "0.8.21",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.20"
+      ],
+      "artifacts": [
+        "TransferWithMessage"
+      ]
+    }
+  }
+}
