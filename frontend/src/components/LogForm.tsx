@@ -5,7 +5,7 @@ import { ethers } from "ethers";
 import DataStorageABI from "../abi/DataStorage.json";
 
 // !!! 重要: 在下方填入你部署的合约地址 !!!
-const contractAddress = "0x41dCf4E34eB2C231Cb03663D6e47ff271f621C4A";
+const contractAddress = "0x7fEf2BDcc4fbE58BcEFf13f97dE5646B690bcCf2";
 
 export const LogForm = () => {
   // --- 表单状态 ---

@@ -3,7 +3,17 @@
     "allow": [
       "Bash(npm install:*)",
       "Bash(npm install)",
-      "Bash(npm run dev:*)"
+      "Bash(npm run dev:*)",
+      "Bash(truffle compile:*)",
+      "Bash(source .env)",
+      "Bash(truffle migrate:*)",
+      "Bash(node:*)",
+      "Bash(timeout 120 truffle migrate:*)",
+      "Bash(gtimeout:*)",
+      "Bash(npm uninstall:*)",
+      "Bash(pnpm remove:*)",
+      "Bash(pnpm add:*)",
+      "Bash(npx hardhat:*)"
     ],
     "deny": [],
     "ask": []

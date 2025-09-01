@@ -9,3 +9,15 @@ type DataWrittenEvent @entity(immutable: true) {
   transactionHash: Bytes!
 }
 
+type TransferWithMessageEvent @entity(immutable: true) {
+  id: Bytes! # Transaction hash + Log index
+  transferId: BigInt! # transferId from contract
+  from: Bytes! # sender address
+  to: Bytes! # receiver address
+  amount: BigInt! # transfer amount in wei
+  message: String! # attached message
+  timestamp: BigInt! # block timestamp
+  blockNumber: BigInt!
+  transactionHash: Bytes!
+}
+

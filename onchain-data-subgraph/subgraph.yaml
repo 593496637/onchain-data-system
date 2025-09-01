@@ -8,7 +8,7 @@ dataSources:
     name: DataStorage
     network: sepolia
     source:
-      address: "0x41dCf4E34eB2C231Cb03663D6e47ff271f621C4A"
+      address: "0x7fEf2BDcc4fbE58BcEFf13f97dE5646B690bcCf2"
       abi: DataStorage
       startBlock: 9075039
     mapping:
@@ -24,3 +24,23 @@ dataSources:
         - event: DataWritten(indexed uint256,indexed address,string,uint256)
           handler: handleDataWritten
       file: ./src/data-storage.ts
+  - kind: ethereum
+    name: TransferWithMessage
+    network: sepolia
+    source:
+      address: "0x6645582223c6334c60c7b89F1D13cd5Bfb2Ae00e"  # Placeholder: update after contract deployment
+      abi: TransferWithMessage
+      startBlock: 9095039  # Update after contract deployment
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - TransferWithMessageEvent
+      abis:
+        - name: TransferWithMessage
+          file: ./abis/TransferWithMessage.json
+      eventHandlers:
+        - event: TransferExecuted(indexed uint256,indexed address,indexed address,uint256,string,uint256)
+          handler: handleTransferWithMessage
+      file: ./src/transfer-with-message.ts

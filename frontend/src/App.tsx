@@ -1,12 +1,13 @@
 import { useState } from "react";
 import { WalletConnect } from "./components/WalletConnect";
 import { LogForm } from "./components/LogForm";
+import { ContractTransferForm } from "./components/ContractTransferForm";
 import { TransferForm } from "./components/TransferForm";
 import { TokenForm } from "./components/TokenForm";
 import { DataList } from "./components/DataList";
 import "./App.css";
 
-type ActiveModule = "log" | "transfer" | "token" | "data";
+type ActiveModule = "log" | "contract-transfer" | "transfer" | "token" | "data";
 
 interface ModuleInfo {
   id: ActiveModule;
@@ -23,6 +24,13 @@ const modules: ModuleInfo[] = [
     description: "通过智能合约事件记录数据到区块链",
     icon: "📝",
     component: LogForm,
+  },
+  {
+    id: "contract-transfer",
+    title: "合约转账",
+    description: "通过转账合约发送ETH并记录附言信息",
+    icon: "🔗",
+    component: ContractTransferForm,
   },
   {
     id: "transfer",
