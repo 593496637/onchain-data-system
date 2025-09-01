@@ -9,14 +9,3 @@ type DataWrittenEvent @entity(immutable: true) {
   transactionHash: Bytes!
 }
 
-type MemoizedSwapEvent @entity(immutable: true) {
-  id: Bytes! # 我们将使用交易哈希作为 ID
-  from: Bytes! # 交易发起者
-  recipient: Bytes! # 最终收款人
-  message: String! # 附言
-  amountIn: BigInt! # 输入的 ETH (WETH) 数量
-  amountOut: BigInt! # 换出的 Token 数量
-  timestamp: BigInt! # 事件发生的时间戳，用于排序
-  blockNumber: BigInt!
-  transactionHash: Bytes!
-}

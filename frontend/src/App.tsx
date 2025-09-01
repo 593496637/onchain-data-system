@@ -3,11 +3,10 @@ import { WalletConnect } from "./components/WalletConnect";
 import { LogForm } from "./components/LogForm";
 import { TransferForm } from "./components/TransferForm";
 import { TokenForm } from "./components/TokenForm";
-import { SwapFormV3 } from "./components/SwapFormV3";
 import { DataList } from "./components/DataList";
 import "./App.css";
 
-type ActiveModule = "log" | "transfer" | "token" | "swap" | "data";
+type ActiveModule = "log" | "transfer" | "token" | "data";
 
 interface ModuleInfo {
   id: ActiveModule;
@@ -38,13 +37,6 @@ const modules: ModuleInfo[] = [
     description: "通过ERC20代币转账记录交易数据",
     icon: "🪙",
     component: TokenForm,
-  },
-  {
-    id: "swap",
-    title: "去中心化交易",
-    description: "通过Uniswap V3兑换同时记录附言数据",
-    icon: "🔄",
-    component: SwapFormV3,
   },
   {
     id: "data",
