@@ -1,21 +1,49 @@
-// src/components/TokenForm.tsx
+/**
+ * ERC20代币交易组件
+ * 
+ * 这是一个ERC20代币转账组件，提供以下功能：
+ * 1. 发送USDC等ERC20代币到指定地址
+ * 2. 自动处理代币精度转换
+ * 3. 完整的交易状态管理和错误处理
+ * 4. 与区块链浏览器的集成链接
+ * 
+ * 技术特性：
+ * - 支持标准ERC20代币协议
+ * - 自动处理代币小数位精度（USDC为6位）
+ * - 智能的余额检查和错误提示
+ * - 用户友好的交易确认流程
+ * 
+ * 支持的代币：
+ * - USDC (USD Coin) - 6位小数精度
+ * - 可扩展支持其他ERC20代币
+ * 
+ * 注意事项：
+ * - 需要用户钱包中有足够的代币余额
+ * - 需要支付ETH作为gas费用
+ * - 在Sepolia测试网使用测试代币
+ */
+
 import { useState } from "react";
 import { ethers } from "ethers";
 
-// Sepolia 测试网上的 USDC 合约地址
+// Sepolia测试网USDC合约地址
+// 这是Circle官方部署的测试网USDC合约
 const usdcContractAddress = "0x1c7D4B196Cb0C7B01d743Fbc6116a902379C7238";
 
-// 我们只需要 transfer 函数的 ABI 定义
+/**
+ * ERC20标准transfer函数的ABI定义
+ * 只包含转账功能所需的最小ABI，提高效率
+ */
 const erc20Abi = [
   {
     name: "transfer",
     type: "function",
     stateMutability: "nonpayable",
     inputs: [
-      { name: "to", type: "address" },
-      { name: "amount", type: "uint256" },
+      { name: "to", type: "address" },      // 接收者地址
+      { name: "amount", type: "uint256" },  // 转账金额（最小单位）
     ],
-    outputs: [{ name: "", type: "bool" }],
+    outputs: [{ name: "", type: "bool" }],  // 返回转账是否成功
   },
 ];
 

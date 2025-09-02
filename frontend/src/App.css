@@ -557,13 +557,19 @@ button[type="submit"]:disabled {
 
 .message-col {
   width: auto;
-  min-width: 150px;
-  max-width: 300px;
+  min-width: 200px;
+  /* 移除 max-width 限制以允许消息完全显示 */
 }
 
 .address-col {
-  width: 100px;
-  min-width: 100px;
+  min-width: 320px;
+  width: auto;
+  font-family: 'SF Mono', Monaco, 'Cascadia Code', monospace;
+}
+
+.hash-col {
+  width: 140px;
+  min-width: 140px;
 }
 
 .amount-col {
@@ -606,11 +612,28 @@ button[type="submit"]:disabled {
 
 /* Message text */
 .message-text {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  max-width: 280px;
   color: var(--gray-700);
+  word-wrap: break-word;
+  /* 移除截断限制，允许消息完全显示 */
+}
+
+/* Hash link */
+.hash-link {
+  font-family: 'SF Mono', Monaco, 'Cascadia Code', monospace;
+  font-size: 0.7rem;
+  color: var(--primary-blue);
+  text-decoration: none;
+  background: var(--gray-50);
+  padding: 1px 4px;
+  border-radius: 3px;
+  border: 1px solid var(--gray-200);
+  transition: all var(--transition-fast);
+}
+
+.hash-link:hover {
+  background: var(--primary-blue);
+  color: white;
+  border-color: var(--primary-blue);
 }
 
 /* Address display */
@@ -737,6 +760,13 @@ button[type="submit"]:disabled {
 
 .avatar-placeholder {
   background: var(--gray-300);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: white;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
 }
 
 /* Modal Styles */
@@ -809,6 +839,13 @@ button[type="submit"]:disabled {
 
 .modal-avatar-placeholder {
   background: var(--gray-300);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: white;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
 }
 
 .modal-ens {

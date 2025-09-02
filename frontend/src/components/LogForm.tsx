@@ -1,26 +1,61 @@
-// src/components/LogForm.tsx
+/**
+ * 事件日志记录组件
+ * 
+ * 这是一个智能合约交互组件，提供以下功能：
+ * 1. 通过智能合约事件将数据永久记录到区块链
+ * 2. 用户友好的表单界面和交互体验
+ * 3. 完整的交易状态管理和错误处理
+ * 4. 与区块链浏览器的集成链接
+ * 
+ * 技术特性：
+ * - 使用ethers.js与智能合约交互
+ * - 支持交易状态跟踪（pending/success/error）
+ * - 智能错误信息解析和用户提示
+ * - 自动表单重置和状态管理
+ * 
+ * 智能合约功能：调用DataStorage合约的writeData函数记录事件
+ */
+
 import { useState } from "react";
 import { ethers } from "ethers";
-// 引入我们准备好的 ABI
+// 引入DataStorage智能合约的ABI定义
 import DataStorageABI from "../abi/DataStorage.json";
 
-// !!! 重要: 在下方填入你部署的合约地址 !!!
+// DataStorage智能合约部署地址（Sepolia测试网）
+// 此合约负责接收和记录用户提交的数据事件
 const contractAddress = "0x7fEf2BDcc4fbE58BcEFf13f97dE5646B690bcCf2";
 
+/**
+ * 事件日志表单主组件
+ * 
+ * 管理用户输入、智能合约交互和交易状态
+ * 提供完整的数据上链功能和用户反馈
+ * 
+ * @returns React组件 - 事件日志记录表单界面
+ */
 export const LogForm = () => {
-  // --- 表单状态 ---
-  const [message, setMessage] = useState("");
+  // === 表单数据状态 ===
+  const [message, setMessage] = useState(""); // 用户输入的日志消息内容
 
-  // --- 交易状态 ---
+  // === 交易状态管理 ===
   const [txStatus, setTxStatus] = useState<
     "idle" | "pending" | "success" | "error"
-  >("idle");
-  const [txHash, setTxHash] = useState("");
-  const [errorMessage, setErrorMessage] = useState("");
+  >("idle"); // 交易当前状态：闲置/进行中/成功/失败
+  const [txHash, setTxHash] = useState(""); // 交易哈希值
+  const [errorMessage, setErrorMessage] = useState(""); // 错误信息
 
+  /**
+   * 错误信息解析函数
+   * 
+   * 将各种Web3交易错误转换为用户友好的中文提示
+   * 涵盖常见的钱包和区块链交互错误场景
+   * 
+   * @param error - 未知类型的错误对象
+   * @returns 格式化的用户友好错误信息
+   */
   const getErrorMessage = (error: unknown): string => {
     if (error instanceof Error) {
-      // 用户取消交易
+      // 用户主动取消交易
       if (error.message.includes('rejected') || 
           error.message.includes('denied') || 
           error.message.includes('ACTION_REJECTED') ||
@@ -28,17 +63,17 @@ export const LogForm = () => {
         return "交易已取消";
       }
       
-      // 余额不足
+      // 账户余额不足以支付gas费
       if (error.message.includes('insufficient funds')) {
         return "余额不足，请确认账户有足够的ETH支付gas费用";
       }
       
-      // 网络错误
+      // 网络连接问题
       if (error.message.includes('network')) {
         return "网络连接异常，请检查网络状态";
       }
       
-      // 合约执行错误
+      // 智能合约执行失败
       if (error.message.includes('execution reverted')) {
         return "合约执行失败，请检查交易参数";
       }
